@@ -38,7 +38,12 @@ public class DecodeActivity extends AppCompatActivity {
     private void decode(){
         EditText inputBox = findViewById(R.id.input_text_box);
         String input = inputBox.getText().toString();
-        String answere = Decoder.decodePrefix(input);
+        String answere;
+        try {
+            answere = String.valueOf(Decoder.decodePrefix(input));
+        } catch (Exception e){
+            answere = "Syntax error";
+        }
         TextView answereBox = findViewById(R.id.answere_text);
         answereBox.setText("the answer is \n" + answere);
     }

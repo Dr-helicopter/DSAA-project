@@ -1,54 +1,58 @@
 package classes;
 
-public class Decoder {
-    public static String decodePrefix(String expression) {
-        Stack<String> stack = new Stack<>();
-        String[] tokens = expression.split(" ");
+import java.util.Arrays;
 
-        try {
-            for (int i = tokens.length - 1; i >= 0; i--) {
-                String token = tokens[i];
+public class Decoder{
+    private static final String[] operators ={
+            "+", "-", "*", "×", "/", "÷", "**", "^",
+    };
 
-                if (token.matches("-?\\d+")) { // If the token is a number
-                    stack.push(token);
-                } else if ("+-*/×÷".contains(token)) { // If the token is an operator
-                    if (stack.size() < 2) {
-                        return "Syntax error";
-                    }
-                    int operand1 = Integer.parseInt(stack.pop());
-                    int operand2 = Integer.parseInt(stack.pop());
+    public static double decodePrefix(String expression) {
+        expression = expression.replaceAll("[()]", "").trim();
 
-                    switch (token) {
-                        case "+":
-                            stack.push(String.valueOf(operand1 + operand2));
-                            break;
-                        case "-":
-                            stack.push(String.valueOf(operand1 - operand2));
-                            break;
-                        case "*":
-                        case "×":
-                            stack.push(String.valueOf(operand1 * operand2));
-                            break;
-                        case "/":
-                        case "÷":
-                            if (operand2 == 0) {
-                                return "Syntax error";
-                            }
-                            stack.push(String.valueOf(operand1 / operand2));
-                            break;
-                    }
-                } else {
-                    return "Syntax error"; // Invalid token
+        String[] tokens = expression.split("\\s+");
+        Stack<Double> stack = new Stack<>();
+
+        for (int i = tokens.length - 1; i >= 0; i--) {
+            String token = tokens[i];
+
+            if (token.matches("-?\\d+(\\.\\d+)?")) {  // if it's a number
+                stack.push(Double.parseDouble(token));
+            } else if (Arrays.asList(Decoder.operators).contains(token)){  // if it's an operator
+                double a = stack.pop();
+                double b = stack.pop();
+
+                double result;
+                switch (token){
+                    case "+":
+                        result = a + b;
+                        break;
+                    case "-":
+                        result = a - b;
+                        break;
+                    case "*":
+                    case"×":
+                        result = a * b;
+                        break;
+                    case "/":
+                     case "÷":
+                        result = a / b;
+                        break;
+                    case "**":
+                    case "^":
+                        result = Math.pow(a, b);
+                        break;
+                    default :
+                        result = 0;
                 }
-            }
-
-            if (stack.size() != 1) {
-                return "Syntax error";
-            }
-
-            return stack.pop();
-        } catch (Exception e) {
-            return "Syntax error";
+                stack.push(result);
+            }else throw new IllegalArgumentException("bad argument");
         }
+
+        if (stack.size() != 1)
+            throw new IllegalArgumentException("Invalid expression: The number of operands and operators do not match.");
+
+
+        return stack.pop();
     }
 }
