@@ -69,10 +69,12 @@ public class DecodeActivity extends AppCompatActivity {
                 catch (Exception e){ answer = "Syntax error"; }
                 break;
             case "infix":
-                answer = "infix";
+                try { answer = String.valueOf(Decoder.decodeInfix(input));}
+                catch (Exception e){ answer = "Syntax error"; }
                 break;
             case "postfix":
-                answer = "postfix";
+                try { answer = String.valueOf(Decoder.decodePostfix(input));}
+                catch (Exception e){ answer = "Syntax error"; }
                 break;
         }
 
