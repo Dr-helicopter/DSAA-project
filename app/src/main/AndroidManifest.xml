@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DSAAproject"
         tools:targetApi="31">
         <activity
+            android:name=".EncodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".DecodeActivity"
             android:exported="false" />
         <activity

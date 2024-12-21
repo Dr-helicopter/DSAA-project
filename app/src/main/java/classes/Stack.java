@@ -3,7 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 public class Stack<T> {
-    private ArrayList<T> stack;
+    private final ArrayList<T> stack;
     private int stackTop = -1;
     public Stack() { stack = new ArrayList<T>(); }
 

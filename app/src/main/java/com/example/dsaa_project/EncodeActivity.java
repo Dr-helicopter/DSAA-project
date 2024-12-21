@@ -16,8 +16,10 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
 import classes.Decoder;
+import classes.Encoder;
 
-public class DecodeActivity extends AppCompatActivity {
+public class EncodeActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +67,15 @@ public class DecodeActivity extends AppCompatActivity {
         String answer = " ";
         switch (selectedValue){
             case "prefix":
-                try { answer = String.valueOf(Decoder.decodePrefix(input));}
+                try { answer = Encoder.encodePrefix(input);}
                 catch (Exception e){ answer = "Syntax error"; }
                 break;
             case "infix":
-                try { answer = String.valueOf(Decoder.decodeInfix(input));}
+                try { answer = Encoder.encodeInfix(input);}
                 catch (Exception e){ answer = "Syntax error"; }
                 break;
             case "postfix":
-                try { answer = String.valueOf(Decoder.decodePostfix(input));}
+                try { answer = Encoder.encodePostfix(input);}
                 catch (Exception e){ answer = "Syntax error"; }
                 break;
         }

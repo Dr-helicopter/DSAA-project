@@ -28,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button decode = findViewById(R.id.DecodeButton);
-        decode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DecodeActivity.class);
-                startActivity(intent);
-            }
+        decode.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DecodeActivity.class);
+            startActivity(intent);
+        });
+
+        Button encode = findViewById(R.id.EncodeButton);
+        encode.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, EncodeActivity.class);
+            startActivity(intent);
         });
     }
 }
