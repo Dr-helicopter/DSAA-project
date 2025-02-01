@@ -66,20 +66,21 @@ public class DecodeActivity extends AppCompatActivity {
         switch (selectedValue){
             case "prefix":
                 try { answer = String.valueOf(Decoder.decodePrefix(input));}
-                catch (Exception e){ answer = "Syntax error"; }
+                catch (Exception e){ answer = e.getMessage(); }
                 break;
             case "infix":
                 try { answer = String.valueOf(Decoder.decodeInfix(input));}
-                catch (Exception e){ answer = "Syntax error"; }
+                catch (Exception e){ answer =  e.getMessage(); }
                 break;
             case "postfix":
                 try { answer = String.valueOf(Decoder.decodePostfix(input));}
-                catch (Exception e){ answer = "Syntax error"; }
+                catch (Exception e){ answer = e.getMessage(); }
                 break;
         }
 
         TextView answereBox = findViewById(R.id.answere_text);
-        answereBox.setText("the answer is \n" + answer);
+        answereBox.setText("Result of entry:\n" + answer);
+        
     }
 
 

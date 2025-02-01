@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 public class Queue<T> {
         private ArrayList<T> list;
@@ -10,27 +9,21 @@ public class Queue<T> {
             list = new ArrayList<>();
         }
 
-        public void add(T element) {
+        public void enqueue(T element) {
             list.add(element);
         }
 
-        public T remove() {
+        public T dequeue() throws Exception {
             if (isEmpty()) {
-                throw new NoSuchElementException("Queue is empty");
+                throw new MyExceptions.emptyQueueException("Queue is empty");
             }
             return list.remove(0);
-        }
-
-        public T peek() {
-            if (isEmpty()) {
-                throw new NoSuchElementException("Queue is empty");
-            }
-            return list.get(0);
         }
 
         public boolean isEmpty() {
             return list.isEmpty();
         }
+        public boolean isFull() { return false; }
 
         public int size() {
             return list.size();

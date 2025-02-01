@@ -68,15 +68,15 @@ public class EncodeActivity extends AppCompatActivity {
         switch (selectedValue){
             case "prefix":
                 try { answer = Encoder.encodePrefix(input);}
-                catch (Exception e){ answer = "Syntax error"; }
+                catch (Exception e){ answer = e.getMessage(); }
                 break;
             case "infix":
                 try { answer = Encoder.encodeInfix(input);}
-                catch (Exception e){ answer = "Syntax error"; }
+                catch (Exception e){ answer = e.getMessage(); }
                 break;
             case "postfix":
                 try { answer = Encoder.encodePostfix(input);}
-                catch (Exception e){ answer = "Syntax error"; }
+                catch (Exception e){ answer = e.getMessage(); }
                 break;
         }
 

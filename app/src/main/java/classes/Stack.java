@@ -12,17 +12,18 @@ public class Stack<T> {
         stackTop ++;
     }
 
-    public T pop() {
-        if (isEmpty()) { throw new IllegalStateException("Stack is empty"); }
+    public T pop() throws Exception{
+        if (isEmpty()) { throw new MyExceptions.stackUnderFlow("Invalid operation"); }
         return stack.remove(stackTop--);
     }
 
-    public T peek() {
-        if (isEmpty()) { throw new IllegalStateException("Stack is empty"); }
+    public T top() throws Exception{
+        if (isEmpty()) { throw new MyExceptions.stackUnderFlow("Stack is empty"); }
         return stack.get(stackTop);
     }
 
     public boolean isEmpty() { return stackTop == - 1; }
+    public boolean isFull() { return false; }
 
     public int size() { return stackTop + 1; }
 }

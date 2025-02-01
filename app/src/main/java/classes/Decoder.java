@@ -7,8 +7,8 @@ public class Decoder{
             "+", "-", "*", "×", "/", "÷", "**", "^",
     };
 
-    public static double decodePrefix(String expression) {
-        expression = expression.replaceAll("[()]", "").trim();
+    public static double decodePrefix(String expression) throws Exception{
+        expression = expression.replaceAll("[(){}]", "").trim();
 
         String[] tokens = expression.split("\\s+");
         Stack<Double> stack = new Stack<>();
@@ -18,12 +18,12 @@ public class Decoder{
 
             if (token.matches("-?\\d+(\\.\\d+)?")) {  // if it's a number
                 stack.push(Double.parseDouble(token));
-            } else if (Arrays.asList(Decoder.operators).contains(token)){  // if it's an operator
+            } else if (Arrays.asList(Decoder.operators).contains(token)) {  // if it's an operator
                 double a = stack.pop();
                 double b = stack.pop();
 
                 double result;
-                switch (token){
+                switch (token) {
                     case "+":
                         result = a + b;
                         break;
@@ -31,37 +31,38 @@ public class Decoder{
                         result = a - b;
                         break;
                     case "*":
-                    case"×":
+                    case "×":
                         result = a * b;
                         break;
                     case "/":
-                     case "÷":
+                    case "÷":
                         result = a / b;
                         break;
                     case "**":
                     case "^":
                         result = Math.pow(a, b);
                         break;
-                    default :
+                    default:
                         result = 0;
                 }
                 stack.push(result);
-            }else throw new IllegalArgumentException("bad argument");
+            } else throw new MyExceptions.invalidExpressionException("Invalid Entry!");
         }
 
         if (stack.size() != 1)
-            throw new IllegalArgumentException("Invalid expression: The number of operands and operators do not match.");
+            throw new MyExceptions.invalidExpressionException("Invalid expression: " +
+                    "The number of operands and operators do not match.");
 
 
         return stack.pop();
     }
 
-    public static double decodeInfix(String expression) {
-        expression = expression.trim();
+    public static double decodeInfix(String expression) throws Exception{
+        expression = expression.trim();//delete starting and ending white-spaces
         Stack<Double> values = new Stack<>();
         Stack<String> operators = new Stack<>();
 
-        String[] tokens = expression.split("(?<=[-+*/^()])|(?=[-+*/^()])|\\s+");
+        String[] tokens = expression.split("(?<=[-+*/^(){}])|(?=[-+*/^(){}])|\\s+");//first any (0 or 1) before character then one after and white-spaces
 
         for (String token : tokens) {
             token = token.trim();
@@ -71,20 +72,20 @@ public class Decoder{
 
             if (token.matches("-?\\d+(\\.\\d+)?")) {  // if it's a number
                 values.push(Double.parseDouble(token));
-            } else if (token.equals("(")) {
+            } else if (token.equals("(") || token.equals("{")) {
                 operators.push(token);
-            } else if (token.equals(")")) {
-                while (!operators.isEmpty() && !operators.peek().equals("(")) {
+            } else if (token.equals(")") || token.equals("}")) {
+                while (!operators.isEmpty() && !operators.top().equals("(") && !operators.top().equals("{")) {
                     values.push(applyOperation(operators.pop(), values.pop(), values.pop()));
                 }
-                operators.pop(); // remove '('
+                operators.pop(); // remove '(' or '{'
             } else if (Arrays.asList(Decoder.operators).contains(token)) {  // if it's an operator
-                while (!operators.isEmpty() && precedence(operators.peek()) >= precedence(token)) {
+                while (!operators.isEmpty() && precedence(operators.top()) >= precedence(token)) {
                     values.push(applyOperation(operators.pop(), values.pop(), values.pop()));
                 }
                 operators.push(token);
             } else {
-                throw new IllegalArgumentException("Invalid token: " + token);
+                throw new MyExceptions.invalidExpressionException("Invalid token: " + token);
             }
         }
 
@@ -93,7 +94,8 @@ public class Decoder{
         }
 
         if (values.size() != 1) {
-            throw new IllegalArgumentException("Invalid expression: The number of operands and operators do not match.");
+            throw new MyExceptions.invalidExpressionException("Invalid expression: " +
+                    "The number of operands and operators do not match.");
         }
 
         return values.pop();
@@ -136,12 +138,12 @@ public class Decoder{
             case "^":
                 return Math.pow(a, b);
             default:
-                throw new IllegalArgumentException("Invalid operator: " + operator);
+                throw new MyExceptions.invalidExpressionException("Invalid operator: " + operator);
         }
     }
 
-    public static double decodePostfix(String expression) {
-        expression = expression.replaceAll("[()]", "").trim();
+    public static double decodePostfix(String expression) throws Exception {
+        expression = expression.replaceAll("[(){}]", "").trim();
 
         String[] tokens = expression.split("\\s+");
         Stack<Double> stack = new Stack<>();
@@ -177,11 +179,12 @@ public class Decoder{
                         result = 0;
                 }
                 stack.push(result);
-            } else throw new IllegalArgumentException("bad argument");
+            } else throw new MyExceptions.invalidExpressionException("Invalid Entry!");
         }
 
         if (stack.size() != 1)
-            throw new IllegalArgumentException("Invalid expression: The number of operands and operators do not match.");
+            throw new MyExceptions.invalidExpressionException("Invalid expression:" +
+                    " The number of operands and operators do not match.");
 
         return stack.pop();
     }

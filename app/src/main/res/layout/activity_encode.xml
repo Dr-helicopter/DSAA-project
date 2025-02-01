@@ -19,13 +19,16 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.279"
+        android:hint= "No1 operator No2"
+        />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="145dp"
-        android:layout_height="20dp"
-        android:text="please enter the string"
+        android:layout_width="197dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="8dp"
+        android:text="please enter the string\nspace as separator"
         app:layout_constraintBottom_toTopOf="@+id/input_text_box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="encodde"
+        android:text="Calculate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,8 +58,8 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="187dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="44dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toTopOf="@+id/input_text_box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
